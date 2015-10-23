@@ -1,0 +1,17 @@
+{
+    "name": "Upload Demo",
+    "main": "index.html",
+    "version": "0.1.0",
+    "chromium-args": "--load-plugin=plugins/WebChimera.plugin",
+    "window": {
+        "title": "Upload Demo",
+        "toolbar": true,
+        "frame": true,
+        "position": "center",
+        "width": 1000,
+        "height": 660
+    },
+    "webkit": {
+        "plugin": true
+     }
+}
