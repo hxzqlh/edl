@@ -1,13 +1,19 @@
 {
-    "name": "Upload Demo",
+    "name": "wcjs-player-demo",
+    "description": "WebChimera.js Player Demo",
+    "version": "0.0.1",
+    "private": true,
     "main": "app://host/index.html",
-    "version": "0.1.0",
+    "dependencies": {
+        "wcjs-player": "git://github.com/jaruba/wcjs-player.git#prebuilt-nwjs"
+    },
     "window": {
-        "title": "Upload Demo",
+        "title": "EDL Demo",
         "toolbar": true,
         "frame": true,
         "position": "center",
         "width": 1000,
         "height": 660
-    }
+    },
+    "env": "development"
 }
