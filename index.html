@@ -5,78 +5,71 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-		<script src="http://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
     </head>
     <body>
         <div class="container">
-            <br>
-            <div class="row fileupload-buttonbar">
-                <span class="btn btn-success fileinput-button">
-                    <i class="glyphicon glyphicon-plus"></i>
-                    <span> Open Media File</span>
-                    <input id="input" type="file">
-                </span>
-            </div>
             <hr class="soften"/>
 			<div id="player" class="row" style="height:480px"></div>
             <hr class="soften"/>
-            <div class="row">
-                <button class="btn btn-primary" onClick="backward()">
-                    <span class="glyphicon glyphicon-backward"></span>
-                </button>
-                <button class="btn btn-danger" onClick="togglePlay()">
-                    <span class="glyphicon glyphicon-pause"></span>
-                </button>
-                <button class="btn btn-primary" onclick="forward()">
-                    <span class="glyphicon glyphicon-forward"></span>
-                </button>
-                <button class="btn btn-warning" onClick="markIn()">
+            <div class="row" style="position:relative">
+                <div class="col-md-2 fileupload-buttonbar">
+                    <span class="btn btn-success fileinput-button">
+                        <i class="glyphicon glyphicon-plus"></i>
+                        <span> Open Media File</span>
+                        <input id="input" type="file">
+                    </span>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-primary" onClick="backward()">
+                        <span class="glyphicon glyphicon-backward"></span>
+                    </button>
+                    <button class="btn btn-danger" onClick="togglePlay()">
+                        <span class="glyphicon glyphicon-pause"></span>
+                    </button>
+                    <button class="btn btn-primary" onclick="forward()">
+                        <span class="glyphicon glyphicon-forward"></span>
+                    </button>
+                </div>
+                <div class="col-md-3">
+                <button class="btn btn-warning" onClick="tagIn()">
                     <span class="glyphicon glyphicon-hand-up"></span>
                     <span> Tag In</span>
                 </button>
-                <button class="btn btn-info" onClick="markOut()">
+                <button class="btn btn-info" onClick="tagOut()">
                     <span class="glyphicon glyphicon-hand-down"></span>
                     <span> Tag Out</span>
                 </button>
+                </div>
+                <div class="col-md-5" style="position:relative">
+                    <button class="btn btn-large btn-primary" style="width:160px; margin:0 20px 0 0" onClick="seekToFrame ('-',1)">
+                        <span class="glyphicon glyphicon-step-backward"></span>
+                    </button>
+                    <button class="btn btn-large btn-danger" style="width:160px; margin:0 20px 0 0" onClick="seekToFrame ('+', 1)">
+                        <span class="glyphicon glyphicon-step-forward"></span>
+                    </button>
+     
+                    <div style="position: absolute; top: 40px;">
+                        <div class="btn-group btn-group-sm" role="group" data-toggle="buttons-radio">
+                            <button class="btn btn-default active">1</button>
+                            <button class="btn btn-default">5</button>
+                            <button class="btn btn-default">10</button>
+                            <button class="btn btn-default">25</button>
+                            <button class="btn btn-default">50</button>
+                        </div>
+                    </div>
+                    <div style="position: absolute; top: 40px; left: 200px;">
+                        <div class="btn-group btn-group-sm" role="group" data-toggle="buttons-radio">
+                            <button class="btn btn-default active">1</button>
+                            <button class="btn btn-default">5</button>
+                            <button class="btn btn-default">10</button>
+                            <button class="btn btn-default">25</button>
+                            <button class="btn btn-default">50</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-		<script>
-			var wjs = require("wcjs-player");
-			var player = new wjs("#player").addPlayer({autoplay:true});
-			player.onPlaying(function() { 
-				console.log("playing"); 
-			});
-			player.onPaused(function() { 
-				console.log("paused"); 
-			});
-				
-			$('#input').on ('change', function (e) {
-				console.log (e.target.value);
-				player.clearPlaylist();
-				player.addPlaylist("file://" + e.target.value);	
-				player.play();
-			});
-
-            function backward () {
-                player.rate (0.5 * player.rate());
-            }
-
-            function forward () {
-                player.rate (2.0 * player.rate());
-            }
-
-            function togglePlay () {
-                if (player.playing()) {
-                    player.pause();
-                    wjsButton = $(".glyphicon-pause");
-                    if (wjsButton.length != 0) wjsButton.removeClass("glyphicon-pause").addClass("glyphicon-play");
-                } else {
-                    player.rate (1.0);
-                    player.play();
-                    wjsButton = $(".glyphicon-play");
-                    if (wjsButton.length != 0) wjsButton.removeClass("glyphicon-play").addClass("glyphicon-pause");
-                }
-            }
-		</script>
+		<script src="http://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+		<script src="js/index.js"></script>
    </body>
 </html>
