@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Demo</title>
+        <title>Edit Decision List Demo</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
@@ -9,19 +9,36 @@
     </head>
     <body>
         <div class="container">
-            <h1>Edit Decision List Demo</h1>
-            <hr class="soften"/>
-            <div class="row fileupload-buttonbar">
-                <div class="col-lg-7">
-                    <span class="btn btn-success fileinput-button">
-                        <i class="glyphicon glyphicon-plus"></i>
-                        <span>Select files...</span>
-                        <input id="input" type="file">
-                    </span>
-                </div>
-            </div>
             <br>
-			<div id="player" style="height:400px"></div>
+            <div class="row fileupload-buttonbar">
+                <span class="btn btn-success fileinput-button">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    <span> Open Media File</span>
+                    <input id="input" type="file">
+                </span>
+            </div>
+            <hr class="soften"/>
+			<div id="player" class="row" style="height:480px"></div>
+            <hr class="soften"/>
+            <div class="row">
+                <button class="btn btn-primary" onClick="backward()">
+                    <span class="glyphicon glyphicon-backward"></span>
+                </button>
+                <button class="btn btn-danger" onClick="togglePlay()">
+                    <span class="glyphicon glyphicon-pause"></span>
+                </button>
+                <button class="btn btn-primary" onclick="forward()">
+                    <span class="glyphicon glyphicon-forward"></span>
+                </button>
+                <button class="btn btn-warning" onClick="markIn()">
+                    <span class="glyphicon glyphicon-hand-up"></span>
+                    <span> Tag In</span>
+                </button>
+                <button class="btn btn-info" onClick="markOut()">
+                    <span class="glyphicon glyphicon-hand-down"></span>
+                    <span> Tag Out</span>
+                </button>
+            </div>
         </div>
 		<script>
 			var wjs = require("wcjs-player");
@@ -39,6 +56,27 @@
 				player.addPlaylist("file://" + e.target.value);	
 				player.play();
 			});
+
+            function backward () {
+                player.rate (0.5 * player.rate());
+            }
+
+            function forward () {
+                player.rate (2.0 * player.rate());
+            }
+
+            function togglePlay () {
+                if (player.playing()) {
+                    player.pause();
+                    wjsButton = $(".glyphicon-pause");
+                    if (wjsButton.length != 0) wjsButton.removeClass("glyphicon-pause").addClass("glyphicon-play");
+                } else {
+                    player.rate (1.0);
+                    player.play();
+                    wjsButton = $(".glyphicon-play");
+                    if (wjsButton.length != 0) wjsButton.removeClass("glyphicon-play").addClass("glyphicon-pause");
+                }
+            }
 		</script>
    </body>
 </html>
