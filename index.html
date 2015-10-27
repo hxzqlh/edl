@@ -4,12 +4,32 @@
         <title>Edit Decision List Demo</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <link rel="stylesheet" href="css/style.css">
-        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     </head>
     <body>
         <div class="container">
             <hr class="soften"/>
-			<div id="player" class="row" style="height:480px"></div>
+            <div id="videoContainer" style="position:relative">
+			    <div id="player" class="row" style="height:480px"></div>
+                <div id="frameTracking" style="position: absolute; top: 3px">
+                    <div class="btn-group">
+                        <button class="btn disabled triggerTooltip" rel="tooltip" data-placement="top" data-original-title="Current frame rate.">FPS:</button>
+                        <button id="trackFrameRate" class="btn disabled trackFrames btn-success triggerTooltip" rel="tooltip" data-placement="top" data-original-title="Current frame rate.">24</button>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn disabled">SMPTE:</button>
+                        <button id="trackSMPTE" class="btn disabled trackFrames btn-danger triggerTooltip" rel="tooltip" data-placement="top" data-original-title="Current SMPTE time code.">00:00:00:00</button>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn disabled">Time Code:</button>
+                        <button id="trackTime" class="btn disabled trackFrames btn-danger triggerTooltip" rel="tooltip" data-placement="top" data-original-title="Current time in video.">00:00:00</button>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn disabled">Frame Number:</button>
+                        <button id="trackFrames" class="btn disabled trackFrames btn-danger triggerTooltip" rel="tooltip" data-placement="top" data-original-title="Current frame in video.">0</button>
+                    </div>
+                </div>
+            </div>
             <hr class="soften"/>
             <div class="row" style="position:relative">
                 <div class="col-md-2 fileupload-buttonbar">
@@ -30,26 +50,16 @@
                         <span class="glyphicon glyphicon-forward"></span>
                     </button>
                 </div>
-                <div class="col-md-3">
-                <button class="btn btn-warning" onClick="tagIn()">
-                    <span class="glyphicon glyphicon-hand-up"></span>
-                    <span> Tag In</span>
-                </button>
-                <button class="btn btn-info" onClick="tagOut()">
-                    <span class="glyphicon glyphicon-hand-down"></span>
-                    <span> Tag Out</span>
-                </button>
-                </div>
                 <div class="col-md-5" style="position:relative">
-                    <button class="btn btn-large btn-primary" style="width:160px; margin:0 20px 0 0" onClick="seekToFrame ('-',1)">
+                    <button id="seekBackward" class="btn btn-large btn-primary" style="width:160px; margin:0 20px 0 0">
                         <span class="glyphicon glyphicon-step-backward"></span>
                     </button>
-                    <button class="btn btn-large btn-danger" style="width:160px; margin:0 20px 0 0" onClick="seekToFrame ('+', 1)">
+                    <button id="seekForward" class="btn btn-large btn-danger" style="width:160px; margin:0 20px 0 0">
                         <span class="glyphicon glyphicon-step-forward"></span>
                     </button>
      
-                    <div style="position: absolute; top: 40px;">
-                        <div class="btn-group btn-group-sm" role="group" data-toggle="buttons-radio">
+                    <div id="seekBackwardOver" style="position: absolute; top: 40px;">
+                        <div class="btn-group btn-group-sm" data-toggle="buttons-radio">
                             <button class="btn btn-default active">1</button>
                             <button class="btn btn-default">5</button>
                             <button class="btn btn-default">10</button>
@@ -57,8 +67,8 @@
                             <button class="btn btn-default">50</button>
                         </div>
                     </div>
-                    <div style="position: absolute; top: 40px; left: 200px;">
-                        <div class="btn-group btn-group-sm" role="group" data-toggle="buttons-radio">
+                    <div id="seekForwardOver" style="position: absolute; top: 40px; left: 200px;">
+                        <div class="btn-group btn-group-sm" data-toggle="buttons-radio">
                             <button class="btn btn-default active">1</button>
                             <button class="btn btn-default">5</button>
                             <button class="btn btn-default">10</button>
@@ -67,9 +77,39 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-md-3">
+                    <button id="tag" class="btn btn-warning">
+                        <span class="glyphicon glyphicon-hand-up"></span>
+                        <span> Tag</span>
+                    </button>
+                    <button id="screenShot" class="btn btn-success">
+                        <span class="glyphicon glyphicon-picture"></span>
+                        <span> Screeshot</span>
+                    </button>
+                </div>
             </div>
+            <!-- Captured Video Frames -->
+            <div id="videoFrameResults" style="display:none;position:relative;top:30px">
+                <table id="videoFrameTable" class="table table-striped table-bordered">
+                    <caption class="lead">Captured Time Codes</caption>
+                    <thead>
+                        <th>ID</th>
+                        <th>SMPTE Time Code</th>
+                    </thead>
+                    <tbody>
+                        <tr style="display:none;">
+                            <td class="frameID">0</td>
+                            <td class="frameSMPTE">00:00:00:00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="videoFrameScreenshots" style="display:none;position:relative;top:30px">
+                <ul class="thumbnails"></ul>
+                </div>
         </div>
-		<script src="http://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+		<script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+        <script src="http://cdn.bootcss.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
 		<script src="js/index.js"></script>
    </body>
 </html>
