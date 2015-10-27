@@ -1,115 +1,76 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="app">
     <head>
-        <title>Edit Decision List Demo</title>
+        <title>Demo</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <link rel="stylesheet" href="css/style.css">
-        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <script src="js/angular.js"></script>
+        <script src="js/angular-file-model.js"></script>
+        <script src="js/appController.js"></script>
+        <script src="js/app.js"></script>
     </head>
-    <body>
+    <body ng-controller="appCtrl">
         <div class="container">
+            <h1>Edit Decision List Demo</h1>
             <hr class="soften"/>
-            <div id="videoContainer" style="position:relative">
-			    <div id="player" class="row" style="height:480px"></div>
-                <div id="frameTracking" style="position: absolute; top: 3px">
-                    <div class="btn-group">
-                        <button class="btn disabled triggerTooltip" rel="tooltip" data-placement="top" data-original-title="Current frame rate.">FPS:</button>
-                        <button id="trackFrameRate" class="btn disabled trackFrames btn-success triggerTooltip" rel="tooltip" data-placement="top" data-original-title="Current frame rate.">24</button>
-                    </div>
-                    <div class="btn-group">
-                        <button class="btn disabled">SMPTE:</button>
-                        <button id="trackSMPTE" class="btn disabled trackFrames btn-danger triggerTooltip" rel="tooltip" data-placement="top" data-original-title="Current SMPTE time code.">00:00:00:00</button>
-                    </div>
-                    <div class="btn-group">
-                        <button class="btn disabled">Time Code:</button>
-                        <button id="trackTime" class="btn disabled trackFrames btn-danger triggerTooltip" rel="tooltip" data-placement="top" data-original-title="Current time in video.">00:00:00</button>
-                    </div>
-                    <div class="btn-group">
-                        <button class="btn disabled">Frame Number:</button>
-                        <button id="trackFrames" class="btn disabled trackFrames btn-danger triggerTooltip" rel="tooltip" data-placement="top" data-original-title="Current frame in video.">0</button>
-                    </div>
-                </div>
-            </div>
-            <hr class="soften"/>
-            <div class="row" style="position:relative">
-                <div class="col-md-2 fileupload-buttonbar">
+            <div class="row fileupload-buttonbar">
+                <div class="col-lg-7">
                     <span class="btn btn-success fileinput-button">
                         <i class="glyphicon glyphicon-plus"></i>
-                        <span> Open Media File</span>
-                        <input id="input" type="file">
+                        <span>Select files...</span>
+                        <input type="file" multiple file-model="file">
                     </span>
                 </div>
-                <div class="col-md-2">
-                    <button class="btn btn-primary" onClick="backward()">
-                        <span class="glyphicon glyphicon-backward"></span>
-                    </button>
-                    <button class="btn btn-danger" onClick="togglePlay()">
-                        <span class="glyphicon glyphicon-pause"></span>
-                    </button>
-                    <button class="btn btn-primary" onclick="forward()">
-                        <span class="glyphicon glyphicon-forward"></span>
-                    </button>
+            </div>
+            <br>
+            <table role="presentation" class="table table-hover table-striped">
+               <tbody>
+                    <tr ng-repeat="file in files" class="row">
+                        <td class="col-md-6">
+                            <div class="preview" file-preview ng-model="file"></div>
+                        </td>
+                        <td class="col-md-6 text-right">
+                            <button class="btn btn-primary btn-xs" ng-click="file.play()">
+                                <i class="glyphicon glyphicon-upload"></i>
+                                <span> Play</span>
+                            </button>
+                            <button class="btn btn-danger btn-xs" ng-click="file.pause()">
+                                <i class="glyphicon glyphicon-pause"></i>
+                                <span> Pause</span>
+                            </button>
+                            <button class="btn btn-info btn-xs" ng-click="file.markIn()">
+                                <i class="glyphicon glyphicon-repeat"></i>
+                                <span> MarkIn</span>
+                            </button>
+                            <button class="btn btn-info btn-xs" ng-click="file.markOut()">
+                                <i class="glyphicon glyphicon-repeat"></i>
+                                <span> MarkOut</span>
+                            </button>
+                            <button class="btn btn-xs" ng-click="file.cancel()">
+                                <i class="glyphicon glyphicon-remove"></i>
+                                <span> Remove</span>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Note</h3>
                 </div>
-                <div class="col-md-5" style="position:relative">
-                    <button id="seekBackward" class="btn btn-large btn-primary" style="width:160px; margin:0 20px 0 0">
-                        <span class="glyphicon glyphicon-step-backward"></span>
-                    </button>
-                    <button id="seekForward" class="btn btn-large btn-danger" style="width:160px; margin:0 20px 0 0">
-                        <span class="glyphicon glyphicon-step-forward"></span>
-                    </button>
-     
-                    <div id="seekBackwardOver" style="position: absolute; top: 40px;">
-                        <div class="btn-group btn-group-sm" data-toggle="buttons-radio">
-                            <button class="btn btn-default active">1</button>
-                            <button class="btn btn-default">5</button>
-                            <button class="btn btn-default">10</button>
-                            <button class="btn btn-default">25</button>
-                            <button class="btn btn-default">50</button>
-                        </div>
-                    </div>
-                    <div id="seekForwardOver" style="position: absolute; top: 40px; left: 200px;">
-                        <div class="btn-group btn-group-sm" data-toggle="buttons-radio">
-                            <button class="btn btn-default active">1</button>
-                            <button class="btn btn-default">5</button>
-                            <button class="btn btn-default">10</button>
-                            <button class="btn btn-default">25</button>
-                            <button class="btn btn-default">50</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <button id="tag" class="btn btn-warning">
-                        <span class="glyphicon glyphicon-hand-up"></span>
-                        <span> Tag</span>
-                    </button>
-                    <button id="screenShot" class="btn btn-success">
-                        <span class="glyphicon glyphicon-picture"></span>
-                        <span> Screeshot</span>
-                    </button>
+                <div class="panel-body">
+                    Drag And Drop your file here
                 </div>
             </div>
-            <!-- Captured Video Frames -->
-            <div id="videoFrameResults" style="display:none;position:relative;top:30px">
-                <table id="videoFrameTable" class="table table-striped table-bordered">
-                    <caption class="lead">Captured Time Codes</caption>
-                    <thead>
-                        <th>ID</th>
-                        <th>SMPTE Time Code</th>
-                    </thead>
-                    <tbody>
-                        <tr style="display:none;">
-                            <td class="frameID">0</td>
-                            <td class="frameSMPTE">00:00:00:00</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <!-- player cannot coexist with angurlar
+            <div id="playerContainer">
+                <object id="player" type="application/x-chimera-plugin" width="600" height="338">
+                    <param name="mrl" value="http://192.168.10.52/Upload/media/1.flv"/>
+                    <param name="windowless" value="false" />
+                </object>
             </div>
-            <div id="videoFrameScreenshots" style="display:none;position:relative;top:30px">
-                <ul class="thumbnails"></ul>
-                </div>
+            -->
         </div>
-		<script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
-        <script src="http://cdn.bootcss.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
-		<script src="js/index.js"></script>
    </body>
 </html>
