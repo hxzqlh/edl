@@ -52,13 +52,12 @@
                     </button>
                 </div>
                 <div class="span6" style="position:relative">
-                    <button id="seekBackward" class="btn btn-large btn-primary" style="width:190px; margin:0 6px 0 0">
+                    <button id="seekBackward" class="btn btn-large btn-danger" style="width:190px; margin:0 6px 0 0">
                         <span class="icon-step-backward"></span>
                     </button>
-                    <button id="seekForward" class="btn btn-large btn-danger" style="width:190px; margin:0 6px 0 0">
+                    <button id="seekForward" class="btn btn-large btn-primary" style="width:190px;">
                         <span class="icon-step-forward"></span>
                     </button>
-     
                     <div id="seekBackwardOver" style="position: absolute; top: 46px;">
                         <div class="btn-group btn-group-sm" data-toggle="buttons-radio">
                             <button class="btn btn-default active">1</button>
@@ -90,17 +89,21 @@
                 </div>
             </div>
             <!-- Captured Video Frames -->
-            <div id="videoFrameResults" style="display:none;position:relative;top:30px">
+            <div id="videoFrameResults" style="display:none;position:relative;top:40px">
                 <table id="videoFrameTable" class="table table-striped table-bordered">
                     <caption class="lead">Captured Time Codes</caption>
                     <thead>
                         <th>ID</th>
                         <th>SMPTE Time Code</th>
+                        <th>Decision</th>
+                        <th>Tag Info</th>
                     </thead>
                     <tbody>
                         <tr style="display:none;">
                             <td class="frameID">0</td>
                             <td class="frameSMPTE">00:00:00:00</td>
+                            <td class="frameDecision"> </td>
+                            <td class="frameTag"> </td>
                         </tr>
                     </tbody>
                 </table>
@@ -112,14 +115,30 @@
             <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h3 id="myModalLabel">Modal header</h3>
+                <h3 id="myModalLabel">Tag info</h3>
               </div>
               <div class="modal-body">
-                <p>One fine body…</p>
+                  <input type="text" class="span4" placeholder="Tag infomation about this timestamp">
+                  <label class="radio">
+                      <input type="radio" name="decision" value="0"/>
+                      Skip From This Timestamp 
+                  </label>
+                  <label class="radio">
+                      <input type="radio" name="decision" value="1"/>
+                      Skip To This Timestamp
+                  </label>
+                  <label class="radio">
+                      <input type="radio" name="decision" value="2"/>
+                      Mute From This Timestamp
+                  </label>
+                  <label class="radio">
+                      <input type="radio" name="decision" value="3"/>
+                      Mute To This Timestamp
+                  </label>
               </div>
               <div class="modal-footer">
-                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
-                <button class="btn btn-primary">Save changes</button>
+                <button id="saveTag" class="btn btn-primary">Save</button>
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
               </div>
             </div>
         </div>

@@ -10,17 +10,17 @@ player.onOpening (function () {
 player.onPlaying(function() { 
     console.log("playing"); 
 
-    wjsButton = $(".glyphicon-play");
+    wjsButton = $(".icon-play");
     if (wjsButton.length != 0) 
-        wjsButton.removeClass("glyphicon-play").addClass("glyphicon-pause");
+        wjsButton.removeClass("icon-play").addClass("icon-pause");
 });
 
 player.onPaused(function() { 
     console.log("paused"); 
 
-    wjsButton = $(".glyphicon-pause");
+    wjsButton = $(".icon-pause");
     if (wjsButton.length != 0) 
-        wjsButton.removeClass("glyphicon-pause").addClass("glyphicon-play");
+        wjsButton.removeClass("icon-pause").addClass("icon-play");
 });
 
 player.onTime(function() { 
@@ -105,28 +105,51 @@ function toSMPTE (frame, fps) {
 
 $("#tag").bind("click", function(e) {
     e.preventDefault();
-    $('#myModal').modal("show");
     addTag ();
 });
 
 function addTag () {
     if (player.itemCount()<1) return;
-    var curFrame = getCurFrame ();
-    var fps = player.fps();
-    var b = toSMPTE(curFrame, fps);
-    var c = $("#videoFrameTable tbody tr:last").clone().show();
-    c.find("td").each(function() {
-        var a = $(this);
-        a.hasClass("frameID") ? a.html(1 + Number(a.html())) : a.hasClass("frameSMPTE") && a.html(b)
-    });
-    $("#videoFrameTable tbody").append(c);
-    $("#videoFrameResults").fadeIn("500");
+
+    if (player.state() == 'playing') player.pause();
+
+    $('#myModal').modal("show");
 }
 
 $("#screenShot").bind("click", function(e) {
     e.preventDefault();
     getScreenShot ();
 });
+
+$("#saveTag").bind("click", function(e) {
+    e.preventDefault();
+    var curFrame = getCurFrame ();
+    var fps = player.fps();
+    var timeStamp = toSMPTE(curFrame, fps);
+
+    var tagInfo = $('.modal-body input[type="text"]')[0].value;
+    var decision = $('.modal-body input[name="decision"]:checked').val();
+    var c = $("#videoFrameTable tbody tr:last").clone().show();
+    c.find("td").each(function() {
+        var a = $(this);
+        if(a.hasClass("frameID")) a.html(1 + Number(a.html()));
+        if(a.hasClass("frameSMPTE")) a.html(timeStamp);
+        if(a.hasClass("frameDecision")) a.html(decision);
+        if(a.hasClass("frameTag")) a.html(tagInfo);
+    });
+    $("#videoFrameTable tbody").append(c);
+    $("#videoFrameResults").fadeIn("500");
+    
+    resetDialog ();
+    $('#myModal').modal("hide");
+});
+
+function resetDialog () {
+    $('.modal-body input[type="text"]')[0].value = '';
+    $('.modal-body input[name="decision"]').each (function (){
+        this.checked = false;
+    });
+}
 
 //TODO: screenshot is black, need fixed
 function getScreenShot () {
