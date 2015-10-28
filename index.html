@@ -8,27 +8,28 @@
     </head>
     <body>
         <div class="container">
-            <hr class="soften"/>
-            <div id="videoContainer" style="position:relative">
-			    <div id="player" class="row" style="height:480px"></div>
-                <div id="frameTracking" style="position: absolute; top: 3px">
-                    <div class="btn-group">
-                        <button class="btn disabled triggerTooltip" rel="tooltip" data-placement="top" data-original-title="Current frame rate.">FPS:</button>
-                        <button id="trackFrameRate" class="btn disabled trackFrames btn-success triggerTooltip" rel="tooltip" data-placement="top" data-original-title="Current frame rate.">24</button>
-                    </div>
-                    <div class="btn-group">
-                        <button class="btn disabled">SMPTE:</button>
-                        <button id="trackSMPTE" class="btn disabled trackFrames btn-danger triggerTooltip" rel="tooltip" data-placement="top" data-original-title="Current SMPTE time code.">00:00:00:00</button>
-                    </div>
-                    <div class="btn-group">
-                        <button class="btn disabled">Time Code:</button>
-                        <button id="trackTime" class="btn disabled trackFrames btn-danger triggerTooltip" rel="tooltip" data-placement="top" data-original-title="Current time in video.">00:00:00</button>
-                    </div>
-                    <div class="btn-group">
-                        <button class="btn disabled">Frame Number:</button>
-                        <button id="trackFrames" class="btn disabled trackFrames btn-danger triggerTooltip" rel="tooltip" data-placement="top" data-original-title="Current frame in video.">0</button>
-                    </div>
+            <br>
+            <div id="frameTracking" style="position: absolute; top: 3px">
+                <div class="btn-group">
+                    <button class="btn disabled triggerTooltip" rel="tooltip" data-placement="top" data-original-title="Current frame rate.">FPS:</button>
+                    <button id="trackFrameRate" class="btn disabled trackFrames btn-success triggerTooltip" rel="tooltip" data-placement="top" data-original-title="Current frame rate.">24</button>
                 </div>
+                <div class="btn-group">
+                    <button class="btn disabled">SMPTE:</button>
+                    <button id="trackSMPTE" class="btn disabled trackFrames btn-danger triggerTooltip" rel="tooltip" data-placement="top" data-original-title="Current SMPTE time code.">00:00:00:00</button>
+                </div>
+                <div class="btn-group">
+                    <button class="btn disabled">Time Code:</button>
+                    <button id="trackTime" class="btn disabled trackFrames btn-danger triggerTooltip" rel="tooltip" data-placement="top" data-original-title="Current time in video.">00:00:00</button>
+                </div>
+                <div class="btn-group">
+                    <button class="btn disabled">Frame Number:</button>
+                    <button id="trackFrames" class="btn disabled trackFrames btn-danger triggerTooltip" rel="tooltip" data-placement="top" data-original-title="Current frame in video.">0</button>
+                </div>
+            </div>
+            <br>
+            <div id="videoContainer" style="position:relative">
+    		    <div id="player" class="row" style="height:480px"></div>
             </div>
             <hr class="soften"/>
             <div class="row" style="position:relative">

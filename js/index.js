@@ -47,13 +47,13 @@ $("#seekForward").bind("click", function(e) {
 function triggerFrameUpdate () {
     var curFrame = getCurFrame(); 
     $("#trackFrameRate").html(player.fps().toFixed(2)).removeClass("disabled btn-danger").addClass("btn-success");
-    $("#trackSMPTE").html(toSMPTE(curFrame, player.fps().toFixed(2))).removeClass("disabled btn-danger").addClass("btn-success");
+    $("#trackSMPTE").html(toSMPTE(curFrame, player.fps())).removeClass("disabled btn-danger").addClass("btn-success");
     $("#trackTime").html(player.time()).removeClass("disabled btn-danger").addClass("btn-success");
     $("#trackFrames").html(curFrame).removeClass("disabled btn-danger").addClass("btn-success")
 }
 
 function getCurFrame () {
-    var frameTime = parseInt (1000/player.fps().toFixed(2));
+    var frameTime = parseInt (1000/player.fps());
     return Math.floor (player.time() / frameTime);
 }
 
@@ -111,7 +111,7 @@ $("#tag").bind("click", function(e) {
 
 function addTag () {
     var curFrame = getCurFrame ();
-    var fps = player.fps().toFixed(2);
+    var fps = player.fps();
     var b = toSMPTE(curFrame, fps);
     var c = $("#videoFrameTable tbody tr:last").clone().show();
     c.find("td").each(function() {
@@ -127,10 +127,11 @@ $("#screenShot").bind("click", function(e) {
     getScreenShot ();
 });
 
+//TODO: screenshot is black, need fixed
 function getScreenShot () {
     var video = $('.wcp-canvas')[0];
     var curFrame = getCurFrame ();
-    var fps = player.fps().toFixed(2);
+    var fps = player.fps();
     var c = toSMPTE(curFrame, fps);
     var width = player.width();
     var height = player.height();
