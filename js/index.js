@@ -46,7 +46,6 @@ $("#seekForward").bind("click", function(e) {
 
 function triggerFrameUpdate () {
     var curFrame = getCurFrame(); 
-    $("#trackFrameRate").html(player.fps().toFixed(2)).removeClass("disabled btn-danger").addClass("btn-success");
     $("#trackSMPTE").html(toSMPTE(curFrame, player.fps())).removeClass("disabled btn-danger").addClass("btn-success");
     $("#trackTime").html(player.time()).removeClass("disabled btn-danger").addClass("btn-success");
     $("#trackFrames").html(curFrame).removeClass("disabled btn-danger").addClass("btn-success")
@@ -106,10 +105,12 @@ function toSMPTE (frame, fps) {
 
 $("#tag").bind("click", function(e) {
     e.preventDefault();
+    $('#myModal').modal("show");
     addTag ();
 });
 
 function addTag () {
+    if (player.itemCount()<1) return;
     var curFrame = getCurFrame ();
     var fps = player.fps();
     var b = toSMPTE(curFrame, fps);
