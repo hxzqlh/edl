@@ -32,11 +32,11 @@
     		    <div id="player" class="row" style="height:480px"></div>
             </div>
             <hr class="soften"/>
-            <div class="row" style="position:relative">
-                <div class="span2 fileupload-buttonbar">
+            <div class="row-fluid" style="position:relative">
+                <div class="span1 fileupload-buttonbar" style="width: 80px">
                     <span class="btn btn-success fileinput-button">
                         <i class="icon-plus"></i>
-                        <span> Open Media</span>
+                        <span> Open</span>
                         <input id="input" type="file">
                     </span>
                 </div>
@@ -51,7 +51,7 @@
                         <span class="icon-fast-forward"></span>
                     </button>
                 </div>
-                <div class="span6" style="position:relative">
+                <div class="span6" style="position:relative; width:400px">
                     <button id="seekBackward" class="btn btn-large btn-danger" style="width:190px; margin:0 6px 0 0">
                         <span class="icon-step-backward"></span>
                     </button>
@@ -77,15 +77,21 @@
                         </div>
                     </div>
                 </div>
-                <div class="span2">
+                <div class="span3">
                     <button id="tag" class="btn btn-warning">
-                        <span class="glyphicon glyphicon-hand-up"></span>
+                        <span class="icon-tag"></span>
                         <span> Tag</span>
                     </button>
                     <button id="screenShot" class="btn btn-success" style="display: none">
-                        <span class="glyphicon glyphicon-picture"></span>
+                        <span class="icon-picture"></span>
                         <span> Screeshot</span>
                     </button>
+                    <button id="export" class="btn btn-danger">
+                        <span class="icon-share"></span>
+                        <span> Export Edl</span>
+                    </button>
+              </div>
+ 
                 </div>
             </div>
             <!-- Captured Video Frames -->
@@ -103,7 +109,7 @@
                             <td class="frameID">0</td>
                             <td class="frameSMPTE">00:00:00:00</td>
                             <td class="frameDecision"> </td>
-                            <td class="frameTag"> </td>
+                            <td class="frameMark"> </td>
                         </tr>
                     </tbody>
                 </table>
@@ -118,22 +124,18 @@
                 <h3 id="myModalLabel">Tag info</h3>
               </div>
               <div class="modal-body">
-                  <input type="text" class="span4" placeholder="Tag infomation about this timestamp">
+                  <input type="text" class="span4" placeholder="Remark information about this timestamp">
                   <label class="radio">
-                      <input type="radio" name="decision" value="0"/>
-                      Skip From This Timestamp 
+                      <input type="radio" name="decision" value="1"/>Skip From This Timestamp 
                   </label>
                   <label class="radio">
-                      <input type="radio" name="decision" value="1"/>
-                      Skip To This Timestamp
+                      <input type="radio" name="decision" value="2"/>Skip To This Timestamp
                   </label>
                   <label class="radio">
-                      <input type="radio" name="decision" value="2"/>
-                      Mute From This Timestamp
+                      <input type="radio" name="decision" value="3"/>Mute From This Timestamp
                   </label>
                   <label class="radio">
-                      <input type="radio" name="decision" value="3"/>
-                      Mute To This Timestamp
+                      <input type="radio" name="decision" value="4"/>Mute To This Timestamp
                   </label>
               </div>
               <div class="modal-footer">
@@ -142,6 +144,7 @@
               </div>
             </div>
         </div>
+        <input style="display:none;" id="saveEdl" type="file" nwsaveas="edl.json">
 		<script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
         <script src="http://cdn.bootcss.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
 		<script src="js/index.js"></script>

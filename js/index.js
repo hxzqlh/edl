@@ -5,6 +5,7 @@ var tags = [];
 player.onOpening (function () {
     console.log ("opening: fps " + player.fps().toFixed(2));
     $("#trackFrameRate").html(player.fps().toFixed(2)).removeClass("disabled btn-danger").addClass("btn-success");
+    tags = [];
 });
 
 player.onPlaying(function() { 
@@ -127,18 +128,28 @@ $("#saveTag").bind("click", function(e) {
     var fps = player.fps();
     var timeStamp = toSMPTE(curFrame, fps);
 
-    var tagInfo = $('.modal-body input[type="text"]')[0].value;
+    var remark = $('.modal-body input[type="text"]')[0].value;
     var decision = $('.modal-body input[name="decision"]:checked').val();
+    remark = !remark ? "" : remark;
+    decision = !decision ? 0: decision;
+    
     var c = $("#videoFrameTable tbody tr:last").clone().show();
     c.find("td").each(function() {
         var a = $(this);
         if(a.hasClass("frameID")) a.html(1 + Number(a.html()));
         if(a.hasClass("frameSMPTE")) a.html(timeStamp);
         if(a.hasClass("frameDecision")) a.html(decision);
-        if(a.hasClass("frameTag")) a.html(tagInfo);
+        if(a.hasClass("frameMark")) a.html(remark);
     });
     $("#videoFrameTable tbody").append(c);
     $("#videoFrameResults").fadeIn("500");
+
+    var tag = {
+        "timeStamp": timeStamp,
+        "decidion": decision,
+        "mark": remark
+    };
+    tags.push(tag);
     
     resetDialog ();
     $('#myModal').modal("hide");
@@ -149,6 +160,28 @@ function resetDialog () {
     $('.modal-body input[name="decision"]').each (function (){
         this.checked = false;
     });
+}
+
+$("#export").bind("click", function(e) {
+    e.preventDefault();
+    exportEdl ();
+});
+
+function exportEdl () {
+    var chooser = $("#saveEdl");
+    chooser.unbind ('change');
+    chooser.change (function(evt) {  
+        var jsonStr = JSON.stringify (tags);
+        console.log (this.value);
+        var fs = require ('fs');
+        fs.writeFile (this.value, jsonStr, function(err) {
+            if(err) {
+                console.log ("error:" + err);
+            }
+        });
+    });
+    
+    chooser.trigger ('click');
 }
 
 //TODO: screenshot is black, need fixed

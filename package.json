@@ -2,7 +2,7 @@
     "name": "demo",
     "version": "0.0.1",
     "private": true,
-    "main": "app://host/index.html",
+    "main": "index.html",
     "window": {
         "title": "EDL Demo",
         "toolbar": true,
