@@ -3,6 +3,9 @@
     "version": "0.0.1",
     "private": true,
     "main": "index.html",
+    "dependencies": {
+         "wcjs-player": "git://github.com/jaruba/wcjs-player.git#prebuilt-nwjs"
+    },
     "window": {
         "title": "EDL Demo",
         "toolbar": true,
